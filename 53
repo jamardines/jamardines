@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+// Declaration to read the students' scores
+void readScores(double *score1, double *score2, double *score3) {
+    printf("Enter the first test score (between 0 and 100): ");
+    scanf("%lf", score1);
+
+    printf("Enter the second test score (between 0 and 100): ");
+    scanf("%lf", score2);
+
+    printf("Enter the third test score (between 0 and 100): ");
+    scanf("%lf", score3);
+}
+
+// Function to calculate the grade and average
+char calculateGradeAndAverage(double score1, double score2, double score3, float *average) {
+    *average = (score1 + score2 + score3) / 3;
+
+    if (*average >= 90) {
+        return 'A';
+    } else if (*average >= 70 && *average < 90) {
+        if (score3 > 90) {
+            return 'A';
+        } else {
+            return 'B';
+        }
+    } else if (*average >= 50 && *average < 70) {
+        float avgSecondThird = (score2 + score3) / 2;
+        if (avgSecondThird > 70) {
+            return 'C';
+        } else {
+            return 'D';
+        }
+    } else {
+        return 'F';
+    }
+}
+
+// Function to print results or grades
+void printResults(char grade, float average) {
+    printf("The student's average score is: %.2f\n", average);
+    printf("The student's grade is: %c\n", grade);
+}
+
+// Main function
+int main() {
+    double score1, score2, score3;
+    readScores(&score1, &score2, &score3);
+
+    float average;
+    char grade = calculateGradeAndAverage(score1, score2, score3, &average);
+
+    printResults(grade, average);
+
+    return 0;
+}
