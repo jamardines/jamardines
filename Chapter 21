@@ -1,0 +1,198 @@
+import java.util.Scanner;
+
+public class AddingupSquaresandCubes {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Upper Limit:");
+        int N = scanner.nextInt();
+
+        int sumOfSquares = 0;
+        int sumOfCubes = 0;
+
+        for (int i = 1; i <= N; i++) {
+            sumOfSquares += i * i;
+            sumOfCubes += i * i * i;
+        }
+
+        int sumOfSquaresFormula = N * (N + 1) * (2 * N + 1) / 6;
+        int sumOfCubesFormula = (int) Math.pow(N * (N + 1) / 2, 2);
+
+        System.out.println("The sum of Squares is  " + sumOfSquares);
+        System.out.println("The sum of Cubes   is  " + sumOfCubes);
+
+        System.out.println("Sum of Squares (using formula) is  " + sumOfSquaresFormula);
+        System.out.println("Sum of Cubes (using formula)   is  " + sumOfCubesFormula);
+
+    
+    }
+}
+
+
+
+
+import java.util.Scanner;
+
+public class WedgeofStar {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Initial number of stars:");
+        int initialStars = scanner.nextInt();
+
+      
+        for (int i = initialStars; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                System.out.print("*");
+            }
+            System.out.println(); // move line after printing star
+        }
+
+    }
+}
+
+
+
+import java.util.Scanner;
+
+public class JetLagCalculator {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Enter number of hours of travel:");
+        int hours = scan.nextInt();
+
+        System.out.println("Enter number of time zones crossed:");
+        int zones = scan.nextInt();
+
+        System.out.println("Enter departure time (24-hour clock format):");
+        int departureTime = scan.nextInt();
+
+        System.out.println("Enter arrival time (24-hour clock format):");
+        int arrivalTime = scan.nextInt();
+
+        int depart;
+        if (departureTime >= 8 && departureTime < 12)
+            depart = 0;
+        else if (departureTime >= 12 && departureTime < 18)
+            depart = 1;
+        else if (departureTime >= 18 && departureTime < 22)
+            depart = 3;
+        else if (departureTime >= 22 || departureTime < 1)
+            depart = 4;
+        else
+            depart = 5;
+
+        int arrive;
+        if (arrivalTime >= 8 && arrivalTime < 12)
+            arrive = 4;
+        else if (arrivalTime >= 12 && arrivalTime < 18)
+            arrive = 2;
+        else if (arrivalTime >= 18 && arrivalTime < 22)
+            arrive = 0;
+        else if (arrivalTime >= 22 || arrivalTime < 1)
+            arrive = 1;
+        else
+            arrive = 3;
+
+        double daysOfRecovery = (hours / 2.0 + (zones - 3) + depart + arrive) / 10.0;
+
+        System.out.println("Number of days needed for recovery: " + daysOfRecovery);
+    }
+}
+
+    
+
+import java.util.Scanner;
+
+public class PowerofNumber {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
+        System.out.println("Enter X:");
+        float x = scan.nextFloat();
+        
+        System.out.println("Enter N:");
+        int n = scan.nextInt();
+        
+        if (n <= 0) {
+            System.out.println("N must be a positive integer.");
+            return;
+        }
+        
+        float result = 1.0f;
+        for (int i = 0; i < Math.abs(n); i++) {
+            result *= x;
+        }
+        if (n < 0) {
+            result = 1 / result;
+        }
+        
+        System.out.printf("%.2f raised to the power %d is: %.5f%n", x, n, result);
+    }
+}
+
+
+public class PineTree {
+    public static void main(String[] args) {
+        int size = 8; 
+        
+    
+        for (int i = 0; i < size; i++) {
+        
+            for (int j = 0; j < size - i - 1; j++) {
+                System.out.print(" ");
+            }
+        
+            for (int j = 0; j < 2 * i + 1; j++) {
+                System.out.print("*");
+            }
+            System.out.println(); 
+        }
+        
+        
+        for (int i = 0; i < 2; i++) {
+        
+            for (int j = 0; j < size - 2; j++) {
+                System.out.print(" ");
+            }
+        
+            System.out.println("***");
+        }
+    }
+}
+
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class MultiplicationQuiz {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        Random random = new Random();
+
+        int correctAnswers = 0;
+
+        for (int i = 0; i < 10; i++) {
+            
+            int num1 = random.nextInt(10);
+            int num2 = random.nextInt(10);
+
+        
+            System.out.printf("What is %d * %d? ", num1, num2);
+            int userAnswer = scan.nextInt();
+
+        
+            int correctAnswer = num1 * num2;
+            if (userAnswer == correctAnswer) {
+                System.out.println("Right!");
+                correctAnswers++;
+            } else {
+                System.out.printf("Wrong. %d * %d is %d\n", num1, num2, correctAnswer);
+            }
+        }
+
+
+        System.out.printf("You got %d out of 10 questions correct!\n", correctAnswers);
+    }
+}
