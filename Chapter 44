@@ -3,27 +3,37 @@ import java.util.Scanner;
 public class charAt {
 
     public static void main(String[] args) {
+    
         Scanner scan = new Scanner(System.in);
 
+        // Prompt the user to enter a string
         System.out.print("Enter a string: ");
+
+        // Read the input string
         String str = scan.nextLine();
 
+        // Iterate through each character of the string
         for (int i = 0; i < str.length(); i++) {
+            // Print each character of the string
             System.out.println(str.charAt(i));
         }
     }
 }
 
 
-
 import java.util.Scanner;
 
 public class DocumentationPrinter {
     public static void main(String[] args) {
+
         Scanner scan = new Scanner(System.in);
 
+        // keep reading lines from the console until there are no more lines
         while (scan.hasNextLine()) {
+            // Read the next line from the console
             String line = scan.nextLine();
+            
+            // check if the line is a comment (starts with "//") and print it
             if (line.trim().startsWith("//")) {
                 System.out.println(line);
             }
@@ -37,80 +47,108 @@ import java.util.Scanner;
 
 public class Microwavemenu {
     public static void main(String[] args) {
+
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("Enter cook time-> ");
-        String input = scan.nextLine();
-
-        int length = input.length();
+        System.out.print("Enter cook time-> "); // ask the user to enter the cook time
+        String input = scan.nextLine();  // read the user input as a string
+        int length = input.length();   // get the length of the input
+        
         int minutes, seconds;
 
+        // if the input length is less than or equal to 2, set minutes to 0 and seconds to the integer value of the input
         if (length <= 2) {
             minutes = 0;
             seconds = Integer.valueOf(input);
         } else {
+            // extract minutes and seconds from the input
             minutes = Integer.valueOf(input.substring(0, length - 2));
             seconds = Integer.valueOf(input.substring(length - 2));
         }
 
+        // it prints the cook time in the format "Your time-> minutes and seconds"
         System.out.printf("Your time->  %d:%02d\n", minutes, seconds);
     }
 }
+
 
 
 import java.util.Scanner;
 
 public class NameEcho {
     public static void main(String[] args) {
+      
         Scanner scan = new Scanner(System.in);
 
-        System.out.printf("Enter your name: ");
-        String input = scan.nextLine().trim();
+      
+        System.out.printf("Enter your name: "); //  ask the user to enter their name
+
+      
+        String input = scan.nextLine().trim();   // read the user input and remove leading and trailing whitespaces
         
-        int spaceIndex = input.indexOf(' '); 
         
+        int spaceIndex = input.indexOf(' ');  // to find the index of the first space character in the input string
+        
+        // check if a space character was found
         if (spaceIndex > 0) { 
-            String firstName = input.substring(0, spaceIndex); 
-            String lastName = input.substring(spaceIndex + 1); 
+        
+            String firstName = input.substring(0, spaceIndex); // extract first name
+           
+            String lastName = input.substring(spaceIndex + 1); // extract last name
             
-            lastName = lastName.toUpperCase();  
-            
-            System.out.println(firstName + " " + lastName); 
+            lastName = lastName.toUpperCase(); // converted the last name to uppercase  
+        
+            System.out.println(firstName + " " + lastName);  // it prints the first name followed by the modified last name
         
         }
     }
 }
 
 
+
 import java.util.Scanner;
 
 public class passwordchecker {
     public static void main(String[] args) {
+
         Scanner scan = new Scanner(System.in);
+        
+        // initializing a boolean variable to track if the password is valid
         boolean isValid = false;
 
+        // continue prompting the user for a password until a valid password is entered
         while (!isValid) {
+            
+            // ask the user to enter a password
             System.out.println("Enter your password:");
             String password = scan.nextLine();
 
+            // check if the length of the password is less than 7 characters
             if (password.length() < 7) {
                 System.out.println("That password is not acceptable.\n");
             } else {
+                // initialize boolean variables to check if the password contains at least one uppercase letter, one lowercase letter, and one digit
                 boolean hasUpperCase = false;
                 boolean hasLowerCase = false;
                 boolean hasDigit = false;
 
+                // iterate through each character of the password
                 for (int i = 0; i < password.length(); i++) {
                     char ch = password.charAt(i);
+                    // check if the character is uppercase
                     if (Character.isUpperCase(ch)) {
                         hasUpperCase = true;
+                    // check if the character is lowercase
                     } else if (Character.isLowerCase(ch)) {
                         hasLowerCase = true;
+                    // check if the character is a digit
                     } else if (Character.isDigit(ch)) {
                         hasDigit = true;
                     }
                 }
 
+                // it checks the password contains at least one uppercase letter,
+                // one lowercase letter, and one digit
                 if (hasUpperCase && hasLowerCase && hasDigit) {
                     System.out.println("Acceptable password.");
                     isValid = true;
@@ -128,24 +166,55 @@ import java.util.Scanner;
 
 public class TitleApplier {
     public static void main(String[] args) {
+  
         Scanner scan = new Scanner(System.in);
         
+        // it continue prompting the user for names until an empty name is entered
         while (true) {
+            // ask the user to enter a name
             System.out.println("Enter a name:");
+
             String input = scan.nextLine().trim(); 
             
+            // if the input is empty, exit the loop
             if (input.isEmpty()) 
                 break;
             
+            // initialize a variable to store the title
             String title = ""; 
             
+            // check if the input starts with specific names and assign the appropriate title
             if (input.startsWith("Amy") || input.startsWith("Buffy") || input.startsWith("Cathy"))
                 title = "Ms.";
             else if (input.startsWith("Elroy") || input.startsWith("Fred") || input.startsWith("Graham"))
                 title = "Mr.";
             
+            // it print the title followed by the input name
             System.out.println(title + " " + input);
         }
     }
 }
 
+
+import java.util.Scanner;
+
+public class WordTriangle {
+    public static void main(String[] args) {
+    
+        Scanner scan = new Scanner(System.in);
+
+        //prompt the user to enter a word
+        System.out.print("Enter a word --> ");
+        String word = scan.nextLine().trim();
+
+        //iterate to print the word triangle
+        for (int i = 0; i <= word.length(); i++) {
+            //print spaces before printing the word
+            for (int space = 0; space < i; space++) {
+                System.out.print(" ");
+            }
+            //print the substring of the word
+            System.out.println(word.substring(i));
+        }
+    }
+}
