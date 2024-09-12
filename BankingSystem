@@ -1,0 +1,174 @@
+
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Enter Name: ");
+        String name = scan.nextLine();
+
+        System.out.println("Enter Age: ");
+        int age = scan.nextInt();
+        scan.nextLine(); 
+
+        System.out.println("Enter Account Number: ");
+        String accountNumber = scan.nextLine();
+
+        System.out.println("Enter Balance: ");
+        double balance = scan.nextDouble();
+        scan.nextLine(); 
+
+        System.out.println("Enter Password: ");
+        String password = scan.nextLine();
+
+        BankAccount account = new BankAccount(accountNumber, name, age, balance, password);
+        System.out.println("\n[Account Created]");
+        account.displayAccountDetails();
+
+
+        int choice;
+
+        do {
+            System.out.println("\nBanking Menu:\n-------------\nSelect [1] to Deposit:\nSelect [2] to Withdraw:\nSelect [3] to Check Balance:\nSelect [4] to Exit:");
+
+            while (!scan.hasNextInt()) {
+                System.out.println("Invalid Input");
+                scan.nextLine(); 
+            }
+
+            choice = scan.nextInt();
+            scan.nextLine(); 
+
+            switch (choice) {
+                case 1:
+                    System.out.print("\nEnter Deposit amount: ");
+                    double deposit = scan.nextDouble();
+                    scan.nextLine();
+                    account.deposit(deposit);
+                    break;
+
+                case 2:
+                    System.out.print("Enter Withdrawal amount: ");
+                    double withdraw = scan.nextDouble();
+                    scan.nextLine(); 
+
+                    System.out.println("Enter Password: ");
+                    String withdrawPassword = scan.nextLine();
+                    account.withdraw(withdraw, withdrawPassword);
+                    break;
+
+                case 3:
+                    System.out.println("Enter Password: ");
+                    String balancePassword = scan.nextLine();
+                    account.checkBalance(balancePassword);
+                    break;
+
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please select again.");
+            }
+        } while (choice != 4);
+
+    }
+}
+
+
+public class BankAccount extends Person {
+
+    private String accountNumber;
+    private double balance;
+    private String password;
+
+    public BankAccount(String accountNumber, String name, int age, double balance, String password) {
+        super(name, age);
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+        this.password = password;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("\nDeposit successful.\nNew balance: $" + balance);
+        } else {
+            System.out.println("Invalid deposit amount.");
+        }
+    }
+
+    public void withdraw(double amount, String inputPassword) {
+        if (!this.password.equals(inputPassword)) {  
+            System.out.println("Incorrect password.");
+            return;
+        }
+        
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            System.out.println("\nWithdrawal successful.\nNew balance: $" + balance);
+        } else if (amount > balance) {
+            System.out.println("Insufficient funds.");
+        } else {
+            System.out.println("Invalid withdrawal amount.");
+        }
+    }
+
+    public void checkBalance(String inputPassword) {
+        if (this.password.equals(inputPassword)) { 
+            System.out.println("Current Balance: $" + balance);
+        } else {
+            System.out.println("Incorrect password.");
+        }
+    }
+    
+    public void displayAccountDetails() {
+        DisplayPersonInfo();
+        System.out.println("Account Number: " + accountNumber);
+    }
+}
+
+
+
+public class Person {
+    
+    private String name;
+    private int age;
+    
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+
+    }
+    
+    public String getName(){
+        return name;
+    }
+
+    public int getAge(){
+        return age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void DisplayPersonInfo() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+    }
+
+
+}
+
+
