@@ -1,0 +1,229 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        
+        Scanner scan = new Scanner(System.in);
+        Library library = new Library();
+
+        int choice;
+
+        do {
+            System.out.println("\nLibrary Management System\n\nSelect [1] to Create Book:\nSelect [2] to Remove Book:\nSelect [3] to Display Books:\nSelect [4] to Borrow Book:\nSelect [5] to Return Book:\nSelect [6] to Exit");
+            
+            while (!scan.hasNextInt()) {
+                System.out.println("Invalid Input, Please enter a number");
+                scan.next(); 
+            }
+            choice = scan.nextInt();  
+            scan.nextLine();  
+
+            switch (choice) {
+                case 1:
+                    // create a new book
+                    System.out.print("Enter Title: ");
+                    String title = scan.nextLine();  
+
+                    System.out.print("Enter Author: ");
+                    String author = scan.nextLine();  
+
+                    System.out.print("Enter ISBN: ");
+                    String ISBN = scan.nextLine();  
+
+                    System.out.print("Enter Availability: ");
+                    int availableCopies = scan.nextInt();  
+                    scan.nextLine(); 
+
+                    //creating a new book and adding it to the library
+                    Book newBook = new Book(title, author, ISBN, availableCopies);
+                    library.addBook(newBook);
+                    break;  
+
+                case 2:
+                    //remove a book based on ISBN
+                    System.out.print("Enter ISBN (International Standard Book Number) to Remove Book: ");
+                    ISBN = scan.nextLine(); 
+                    library.removeBook(ISBN);
+                    break;
+
+                case 3:
+                    //display all books in the library
+                    library.displayBooks();
+                    break;
+
+                case 4:
+                    //borrow a book based on ISBN
+                    System.out.print("Enter ISBN (International Standard Book Number) to Borrow Book: ");
+                    ISBN = scan.nextLine();   
+                    library.borrowBook(ISBN);
+                    break;
+
+                case 5:
+                    //return a book based on ISBN
+                    System.out.print("Enter ISBN (International Standard Book Number) to Return Book: ");
+                    ISBN = scan.nextLine();
+                    library.returnBook(ISBN);
+                    break;
+
+                case 6:
+                    //e xit system
+                    System.out.println("Exiting...");
+                    scan.close();
+                    System.exit(0);
+                
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice: Please enter a number between 1 and 6.");
+            }
+        } while (choice != 6);
+    }
+}
+
+
+public class Book {
+
+    private final String title; 
+    private final String author;
+    private final String ISBN;
+    private final int totalCopies;
+    private int availableCopies;
+
+    public Book(String title, String author, String ISBN, int totalCopies) {
+        this.title = title;
+        this.author = author;
+        this.ISBN = ISBN;
+        this.totalCopies = totalCopies;
+        this.availableCopies = totalCopies;
+    }
+
+    // getters
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public int getAvailableCopies() {
+        return availableCopies;
+    }
+
+    public int getTotalCopies() {
+        return totalCopies;
+    }
+
+    // setter for available copies
+    public void setAvailableCopies(int availableCopies) {
+        if (availableCopies >= 0 && availableCopies <= totalCopies) { 
+            this.availableCopies = availableCopies;
+            System.out.println(availableCopies + "Copies successfully updated.");
+        } else {
+            System.err.println("Error! Invalid number of copies.");
+        }
+    }
+
+    // METHODS
+    // to borrow a book
+    public void borrowBook() {
+        if (availableCopies > 0) {
+            this.availableCopies--;
+            System.out.println("Book returned successfully.\nCopies available is " + availableCopies);
+        } else { 
+            System.out.println("No copies available to borrow.");
+        }
+    }
+
+    // to return a book
+    public void returnBook() {
+        if (availableCopies < totalCopies) {
+            this.availableCopies++;
+            System.out.println("Book returned successfully.\nCopies available is " + availableCopies);
+        } else {
+            System.out.println("All copies are already in the library.");
+        }
+    }
+
+    //to display book details
+    public void displayInfo() {
+        System.out.println("Title: " + title);
+        System.out.println("Author: " + author);
+        System.out.println("ISBN: " + ISBN);
+        System.out.println("Total Copies: " + totalCopies);
+        System.out.println("Available Copies: " + availableCopies);
+    }
+}
+
+
+import java.util.ArrayList;
+
+public class Library {
+
+    // ArrayList to store multiple books in the library
+    private ArrayList<Book> books = new ArrayList<>();
+
+    //METHOOODS
+    //to add a book to the library
+    public void addBook(Book book) {
+        books.add(book);
+        System.out.println("Book added to the library.");
+    }
+
+    //to remove a book from the library by its ISBN
+    public void removeBook(String ISBN) {       
+        for (int i = 0; i < books.size(); i++) {
+    
+            if (books.get(i).getISBN().equals(ISBN)) {
+                books.remove(i);  
+                System.out.println("Book removed successfully.");
+                return;  
+            }
+        }
+        
+        System.out.println("Book with ISBN (" + ISBN + ") not found.");
+    }
+
+    //to display all books in the library
+    public void displayBooks() {
+    
+        if (books.isEmpty()) {
+            System.out.println("\nNo books in the library.");
+        } else {
+            for (int i = 0; i < books.size(); i++) {
+                System.out.println("\nBook #" + (i + 1));
+                books.get(i).displayInfo();  
+            }
+        }
+    }
+
+    // book borrow from the library by its ISBN
+    public void borrowBook(String ISBN) {
+        
+        for (Book book : books) {
+            if (book.getISBN().equals(ISBN)) {
+                book.borrowBook();  
+                return; 
+            }
+        }
+
+        System.out.println("Book with ISBN (" + ISBN + ") not found.");
+    }
+
+    // book return to the library by its ISBN
+    public void returnBook(String ISBN) {
+
+        for (Book book : books) {
+            if (book.getISBN().equals(ISBN)) {
+                book.returnBook();  
+                return;  
+            }
+        }
+    
+        System.out.println("Book with ISBN (" + ISBN + ") not found.");
+    }
+}
