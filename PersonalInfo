@@ -1,0 +1,166 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        Profile newProfile = null;
+        
+        int choice;
+        do {
+
+            System.out.println("\nSelect [1] to Create Profile: ");
+            System.out.println("Select [2] to Update your Profile: ");
+            System.out.println("Select [3] to Display Info: ");
+            System.out.println("Select [4] to Exit: ");
+
+            while(!scan.hasNextInt()) {
+                System.out.println("Invalid Input!");
+                scan.nextLine();
+            }
+            choice = scan.nextInt();
+            scan.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.println("Enter your Name: ");
+                    String name = scan.nextLine();
+
+                    System.out.println("Enter your Age: ");
+                    int age = scan.nextInt();
+                    scan.nextLine();
+
+                    System.out.println("Enter your Email: ");
+                    String email = scan.nextLine();
+
+                    System.out.println("Enter your Phone Number: ");
+                    String phoneNumber = scan.nextLine();
+                    newProfile = new Profile(name, age, email, phoneNumber);
+                    newProfile.ProfileCreated();
+                    break;
+
+
+                case 2:
+                    newProfile.updateProfile();
+                    break;
+
+
+
+                case 3: 
+                    newProfile.DisplayInfo();
+                    
+            }
+
+        } while(choice != 4);
+
+
+    }
+}
+
+import java.util.*;
+
+public class Profile {
+    
+    private String name;
+    private int age;
+    private String email;
+    private String phoneNumber;
+
+public Profile(String name, int age, String email, String phoneNumber) {
+    this.name = name;
+    this.age = age;
+    this.email = email;
+    this.phoneNumber = phoneNumber;
+
+}
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return  age;
+
+    }
+
+    public String getEmail() {
+        return email;
+
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+
+    } 
+
+    public void Name(String name) {
+        this.name = name;
+        
+    }
+
+    public void Age(int age) {
+        this.age = age;
+
+    }
+
+    public void Email(String email) {
+        this.email = email;
+    }
+
+    public void phoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public void ProfileCreated() {
+        System.out.println("\nProfile Created:\n----------------");
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Email: " + email);
+        System.out.println("Phone Number: " + phoneNumber);
+    }
+    public void DisplayInfo() {
+        System.out.println("\nName: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Email: " + email);
+        System.out.println("Phone Number: " + phoneNumber);
+
+    }
+
+    public void updateProfile() {
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Update Profile:\n---------------");
+        System.out.printf("Enter new  Name (or press Enter to keep current): ");
+        String newName = scan.nextLine();
+        if(!newName.isEmpty()) {
+            this.name = newName;
+        
+        }
+        System.out.printf("Enter new Age(or press Enter to keep current): ");
+        String ageInput = scan.nextLine();
+        if(!ageInput.isEmpty()) {
+            try {
+                this.age = Integer.parseInt(ageInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid age input. Age not updated.");
+                
+            
+        }
+        System.out.printf("Enter new Email (or press Enter to keep current): ");
+        String newEmail = scan.nextLine();
+        if(!newEmail.isEmpty()) {
+            this.email = newEmail;
+            
+        }
+        System.out.printf("Enter new Phone Number (or press Enter to keep current): ");
+        String newPhoneNumber = scan.nextLine();
+        if(!newPhoneNumber.isEmpty()) {
+            this.phoneNumber = newPhoneNumber;
+        
+        }
+
+        System.out.println("\nProfile updated succesfully.");
+
+        
+        }
+    }
+}
