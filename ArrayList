@@ -1,0 +1,49 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[]args) {
+        Scanner scan = new Scanner(System.in);
+
+        ArrayList<String> Student = new ArrayList<>();
+        String studentName;
+try {
+    System.out.println("Enter student name (type 'done' when finished): ");
+        while (true) {
+        studentName = scan.nextLine();
+        
+        if(studentName.equalsIgnoreCase("done")) {
+        break;
+        
+        }
+
+        if(isNumeric(studentName)) {
+            System.out.println("please enter name! (not number)");
+            continue;
+
+        }
+    Student.add(studentName);
+    }
+
+} catch(NumberFormatException e) {
+    System.out.println("please enter name!");
+
+}
+
+    System.out.println("\nList of Students: ");
+    for(String name: Student ) {
+        System.out.println(name);
+
+        }
+    }
+
+    private static boolean isNumeric(String str) {
+
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }   
+    }
+}
+
