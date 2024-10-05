@@ -1,0 +1,102 @@
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class NodeList {
+    private Node last;
+    private int counter;
+
+    public NodeList() {
+        last = null;
+        counter = 0;
+    }
+
+    public boolean isEmpty() {
+        return counter == 0;
+    }
+
+    public boolean add(Node item) {
+        if (isEmpty()) {
+            last = item;
+            last.next = last;
+        } else {
+            item.next = last.next;
+            last.next = item;
+        }
+        last = item;
+        counter++;
+        return true;
+    }
+
+    public boolean delete(int location) {
+        if (isEmpty() || location < 0 || location >= counter) {
+            return false;
+        }
+
+        Node current = last.next;
+        Node previous = last;
+
+        for (int i = 0; i < location; i++) {
+            previous = current;
+            current = current.next;
+        }
+
+        if (current == last) {
+            if (counter == 1) {
+                last = null;
+            } else {
+                previous.next = last.next;
+                last = previous;
+            }
+        } else {
+            previous.next = current.next;
+            if (current == last.next) {
+                last.next = previous.next;
+            }
+        }
+
+        counter--;
+        return true;
+    }
+
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("List is empty");
+            return;
+        }
+
+        Node current = last.next;
+        do {
+            System.out.print(current.data + " ");
+            current = current.next;
+        } while (current != last.next);
+        System.out.println();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        NodeList nodeList = new NodeList();
+
+        nodeList.add(new Node(1));
+        nodeList.add(new Node(2));
+        nodeList.add(new Node(3));
+        System.out.print("List after adding nodes: ");
+        nodeList.display();
+
+        nodeList.delete(1);
+        System.out.print("List after deleting node at index 1: ");
+        nodeList.display();
+
+        nodeList.delete(0);
+        nodeList.delete(0);
+        System.out.print("List after deleting all nodes: ");
+        nodeList.display();
+    }
+}
