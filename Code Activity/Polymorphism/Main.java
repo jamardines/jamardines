@@ -1,6 +1,4 @@
-
-// parent class
-abstract class Product {
+class Product {
 
     private String productId;
     private String productName;
@@ -42,12 +40,19 @@ abstract class Product {
         }
     }
 
-    public abstract void displayInfoProduct();
+    public void displayInfoProduct() {
+        System.out.println("\nGeneric Product");
+        System.out.println("Product ID: " + getProductId());
+        System.out.println("Product Name: " + getProductName());
+        System.out.println("Quantity: " + getQuantity());
+        System.out.println("Price: $" + getPrice());
+    }
 
-    public abstract void updateStock(int amount);
+    public void updateStock(int amount) {
+        setQuantity(getQuantity() + amount);
+    }
 }
 
-// perishable sub classs
 class PerishableProduct extends Product {
     private String expirationDate;
 
@@ -81,7 +86,6 @@ class PerishableProduct extends Product {
     }
 }
 
-// non perishable sub classs
 class NonPerishableProduct extends Product {
     private int shelfLife;
 
@@ -110,23 +114,16 @@ class NonPerishableProduct extends Product {
     }
 }
 
-// main class
 public class Main {
     public static void main(String[] args) {
-        //perishable product
-        PerishableProduct perishableProduct = new PerishableProduct("P001", "Milk", 50, 3.50, "2024-12-01");
-        perishableProduct.displayInfoProduct();
-        
-        // pdate stock for perishable 
-        perishableProduct.updateStock(30);
-        perishableProduct.displayInfoProduct();
+        Product[] products = new Product[2];
+        products[0] = new PerishableProduct("P001", "Milk", 50, 3.50, "2024-12-01");
+        products[1] = new NonPerishableProduct("NP001", "Canned Beans", 200, 1.25, 365);
 
-        // non-perishable 
-        NonPerishableProduct nonPerishableProduct = new NonPerishableProduct("NP001", "Canned Beans", 200, 1.25, 365);
-        nonPerishableProduct.displayInfoProduct();
-        
-        // update stock for non-perishable
-        nonPerishableProduct.updateStock(50);
-        nonPerishableProduct.displayInfoProduct();
+        for (Product product : products) {
+            product.displayInfoProduct();
+            product.updateStock(20);
+            product.displayInfoProduct();
+        }
     }
 }
