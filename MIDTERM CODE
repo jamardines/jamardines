@@ -1,0 +1,182 @@
+import java.util.*;
+
+class StudentNotFoundException extends Exception {
+    public StudentNotFoundException(String message) {
+        super(message);
+    }
+}
+
+class TeacherNotFoundException extends Exception {
+    public TeacherNotFoundException(String message) {
+        super(message);
+    }
+}
+
+abstract class Person {
+    private String name;
+    private int age;
+
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+        
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    abstract String getDetails();
+}
+
+class Student extends Person {
+    private String studentID;
+    private double grade;
+
+    public Student(String name, int age, String studentID, double grade) {
+            super(name, age);
+            this.studentID = studentID;
+            this.grade = grade;
+
+    }
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    @Override
+    String getDetails() {
+        return "Name: " + getName() + " age: " + getAge() + " Student ID: " + studentID + " Grade: " + grade;
+    }
+}
+
+class Teacher extends Person {
+    private String teacherID;
+    private String subject;
+
+    public Teacher(String name, int age, String teacherID, String subject) {
+        super(name, age);
+        this.teacherID = teacherID;
+        this.subject = subject;
+        }
+
+        public String getTeacherID() {
+            return teacherID;
+        }
+    
+    @Override
+    String getDetails() {
+        return "Name: " + getName() + " age: " + getAge() + " Teacher ID: " + teacherID + " Subject: " + subject;
+        }
+    }
+
+    class School {
+
+        private ArrayList<Student> students;
+        private ArrayList<Teacher> teachers;
+
+        public School() {
+            students = new ArrayList<>();
+            teachers = new ArrayList<>();
+        }
+
+        public void addStudent(Student student) {
+            students.add(student);
+        }
+        public void addTeacher(Teacher teacher) {
+            teachers.add(teacher);
+        }
+
+        public void displayStudents() {
+            System.out.println("\nStudents: ");
+            for(Student student : students) {
+                System.out.println(student.getDetails());
+            }
+        }
+
+        public void displayTeachers() {
+            System.out.println("\nTeachers: ");
+            for(Teacher teacher : teachers) {
+                System.out.println(teacher.getDetails());
+            }
+        }
+
+        public void searchStudent(String studentID) throws StudentNotFoundException {
+            for(Student student : students) {
+                if(student.getStudentID().equals(studentID)) {
+                    System.out.println("\nStudent found " + student.getDetails());
+                    return;
+                }  
+            }
+            throw new StudentNotFoundException("Student with ID " + studentID + " not found.");
+        }
+
+        public void searchTeacher(String teacherID) throws TeacherNotFoundException {
+            for(Teacher teacher : teachers) {
+                if(teacher.getTeacherID().equals(teacherID)) {
+                    System.out.println("\nTeacher found " + teacher.getDetails() + "\n");
+                    return;
+                }
+            }
+            throw new TeacherNotFoundException("\nTeacher with ID " + teacherID + " not found.");
+        }
+
+    }
+
+    public class Main {
+        public static void main(String[]args) {
+
+        School school = new School(); 
+
+        // case 1
+        school.addStudent(new Student("Alice", 20, "S001", 1.5)); 
+        school.addStudent(new Student("Bob", 21, "S002", 1.8)); 
+        school.displayStudents();
+
+        // case 2
+        school.addTeacher(new Teacher("Mr. Smith", 40, "T001", "Math")); 
+        school.addTeacher(new Teacher("Ms. Johnson", 35, "T002", "History"));
+        school.displayTeachers();
+        
+        //case 3
+        try {
+
+        school.searchStudent("S001");
+        } catch(StudentNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        // case 4
+        try {
+        school.searchStudent("S003");
+        } catch(StudentNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        // case 5
+        school.displayTeachers();
+        
+        // case 6
+        school.addTeacher(new Teacher("Mr. Brown", 50, "T003", "Physics"));
+        school.displayTeachers();
+
+        // case 7
+        try {
+            school.searchTeacher("T001");
+        } catch(TeacherNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        }
+    }
+
