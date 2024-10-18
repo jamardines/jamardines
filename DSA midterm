@@ -1,5 +1,5 @@
 
-// nodelist
+// nodelist or listnode
 
 class Node {
     String data;
@@ -198,62 +198,74 @@ public class StackList
 
 
 
+// stacknode
 
-// listnode 
-class Node {
-    String data;  // Data held by the node
-    Node next;    // Pointer to the next node in the list
+class StackNode {
+    int value;         
+    StackNode next;    
 
-    Node(String data) {
-        this.data = data;
-        this.next = null;  
+
+    StackNode(int value) {
+        this.value = value;
+        this.next = null; 
     }
 }
 
-class LinkedList {
-    private Node head;  
+class Stack {
+    private StackNode top; 
 
-    public LinkedList() {
-        head = null;  
+    public Stack() {
+        this.top = null; // Initially, the stack is empty
     }
 
-   
-    public void add(String data) {
-        Node newNode = new Node(data);
-        if (head == null) {
-            head = newNode;  
-        } else {
-            Node temp = head;
-            while (temp.next != null) {
-                temp = temp.next; 
-            }
-            temp.next = newNode;  
-        }
+    public void push(int value) {
+        StackNode newNode = new StackNode(value);
+        newNode.next = top; 
+        top = newNode;     
     }
 
-    
-    public void display() {
-        if (head == null) {
-            System.out.println("List is empty");
-            return;
+    // Method to pop a value from the stack
+    public int pop() {
+        if (isEmpty()) {
+            throw new RuntimeException("Stack is empty");
         }
-        Node temp = head;
-        while (temp != null) {
-            System.out.print(temp.data + " -> ");
-            temp = temp.next;  
-        }
-        System.out.println("null");
+        int poppedValue = top.value; // Get the value to return
+        top = top.next;               // Update the top to the next node
+        return poppedValue;           // Return the popped value
     }
-}
 
-public class Main {
+  
+    public int peek() {
+        if (isEmpty()) {
+            throw new RuntimeException("Stack is empty"); 
+        }
+        return top.value; // Return the value of the top node
+    }
+
+
+    public boolean isEmpty() {
+        return top == null; // Returns true if the stack is empty
+    }
+
+    // Main method to demonstrate stack operations
     public static void main(String[] args) {
-        LinkedList list = new LinkedList();
-        list.add("Node 1");
-        list.add("Node 2");
-        list.add("Node 3");
-        System.out.print("Linked List: ");
-        list.display();
+        Stack stack = new Stack();
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+        
+        System.out.println("Top element: " + stack.peek()); 
+        
+        System.out.println("Popped element: " + stack.pop()); 
+        System.out.println("Popped element: " + stack.pop()); 
+        
+        System.out.println("Is stack empty? " + stack.isEmpty()); 
+        
+        System.out.println("Popped element: " + stack.pop()); 
+        System.out.println("Is stack empty? " + stack.isEmpty()); 
     }
 }
+
+
+
 
