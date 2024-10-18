@@ -195,3 +195,65 @@ public class StackList
    }
    
 }
+
+
+
+
+// class Node {
+    String data;  // Data held by the node
+    Node next;    // Pointer to the next node in the list
+
+    // Constructor to initialize the node with data
+    Node(String data) {
+        this.data = data;
+        this.next = null;  // Initially, the next is set to null
+    }
+}
+
+class LinkedList {
+    private Node head;  // Head refers to the first node in the list
+
+    public LinkedList() {
+        head = null;  // Initially, the list is empty
+    }
+
+    // Method to add a node at the end of the list
+    public void add(String data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;  // If the list is empty, the new node becomes the head
+        } else {
+            Node temp = head;
+            while (temp.next != null) {
+                temp = temp.next;  // Traverse to the last node
+            }
+            temp.next = newNode;  // Add the new node at the end
+        }
+    }
+
+    // Method to display the linked list
+    public void display() {
+        if (head == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;  // Move to the next node
+        }
+        System.out.println("null");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        LinkedList list = new LinkedList();
+        list.add("Node 1");
+        list.add("Node 2");
+        list.add("Node 3");
+        System.out.print("Linked List: ");
+        list.display();
+    }
+}
+
