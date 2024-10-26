@@ -1,8 +1,6 @@
 
 // POSTFIX TO INFIX
 import java.util.*;
-import java.util.Stack;
-
 public class InfixtoPostfix {
     private String infix;
 
@@ -21,31 +19,33 @@ public class InfixtoPostfix {
     }
 
     public String convert() {
-        Stack<Character> s = new Stack<>();
+        Stack<Character> stack = new Stack<>();
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < infix.length(); i++) {
             char c = infix.charAt(i);
-
+            
             if (Character.isDigit(c)) {
-                result.append(c);
+                result.append(c);  
             } else if (c == '(') {
-                s.push(c);
+                stack.push(c);
             } else if (c == ')') {
-                while (!s.isEmpty() && s.peek() != '(') {
-                    result.append(s.pop());
+                while (!stack.isEmpty() && stack.peek() != '(') {
+                    result.append(stack.pop());
                 }
-                s.pop(); 
-            } else {
-                while (!s.isEmpty() && getPrec(c) <= getPrec(s.peek())) {
-                    result.append(s.pop());
+                if (!stack.isEmpty()) {
+                    stack.pop(); 
                 }
-                s.push(c);
+            } else { 
+                while (!stack.isEmpty() && getPrec(c) <= getPrec(stack.peek())) {
+                    result.append(stack.pop());
+                }
+                stack.push(c);
             }
         }
 
-        while (!s.isEmpty()) {
-            result.append(s.pop());
+        while (!stack.isEmpty()) {
+            result.append(stack.pop());
         }
 
         return result.toString();
@@ -56,14 +56,14 @@ public class InfixtoPostfix {
         int choice;
 
         do {
-            System.out.println("Infix to Postfix Converter");
+            System.out.println("\nInfix to Postfix Converter");
             System.out.println("[1] Enter an infix expression");
             System.out.println("[0] Exit");
             System.out.print("Select an option: ");
 
             while (!scan.hasNextInt()) {
                 System.out.println("Invalid Input! Please enter [1 or 0].");
-                scan.nextLine(); 
+                scan.nextLine();
             }
             choice = scan.nextInt();
             scan.nextLine();
@@ -89,7 +89,6 @@ public class InfixtoPostfix {
         } while (choice != 0);
     }
 }
-
 
 
 
