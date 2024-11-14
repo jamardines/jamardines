@@ -2,50 +2,37 @@ import java.io.*;
 import java.util.*;
 
 public class ExpressionChecker {
-
-    // Method to check if the expression is well-defined
     public static boolean isWellDefined(String expression) {
         Stack<Character> stack = new Stack<>();
 
-        // Traverse through each character of the expression
         for (char ch : expression.toCharArray()) {
-            // Push opening symbols onto the stack
             if (ch == '(' || ch == '{' || ch == '[') {
                 stack.push(ch);
             }
-            // Check closing symbols
+    
             else if (ch == ')' || ch == '}' || ch == ']') {
-                // If stack is empty or top of the stack does not match, it's not well defined
                 if (stack.isEmpty()) {
                     return false;
                 }
+
                 char top = stack.pop();
-                if ((ch == ')' && top != '(') ||
-                    (ch == '}' && top != '{') ||
-                    (ch == ']' && top != '[')) {
+                if ((ch == ')' && top != '(') || (ch == '}' && top != '{') || (ch == ']' && top != '[')) {
                     return false;
                 }
             }
         }
-
-        // If the stack is empty, all symbols matched correctly
         return stack.isEmpty();
     }
 
     public static void main(String[] args) {
-        // File to read expressions from
         String filename = "expressions.txt";
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String expression;
             int lineNumber = 1;
 
-            // Read each line from the file
             while ((expression = reader.readLine()) != null) {
-                // Check if the expression is well-defined
-                boolean result = isWellDefined(expression);
-
-                // Output the result
+                boolean result = isWellDefined(expression);     
                 if (result) {
                     System.out.println("Expression " + lineNumber + ": Well Defined");
                 } else {
