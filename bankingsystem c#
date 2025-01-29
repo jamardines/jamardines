@@ -1,0 +1,138 @@
+using System;
+class Person 
+{
+    private string name{get; set;}
+    private int age{get; set;}
+
+}
+
+    public virual DisplayPersonDetails() 
+    {
+        Console.WriteLine("Name" + name);
+        Console.WriteLine("Age" + age);
+
+    }
+
+class BankAccount : Person
+{
+    private string accountNumber{get; protected; set}
+    private double balance{get; protected; set}
+    private string password{get; protected; set}
+
+    public virtual deposit(double amount)
+    {
+        if(amount > 0) {
+            balance += amount;
+            Console.WriteLine("Deposit succesfully.\nNew Balance: $" + balance);
+        } else {
+            Console.WriteLine("Invalid deposit amount.");
+        }
+    }
+
+    public virtual withdraw(double amount, string inputpassword) 
+    {
+        if(!this.password.equals(inputpassword)) {
+            Console.WriteLine("Invalid password.");
+            return;
+        }
+
+        if(amount > 0 && amount <= balance) {
+            balance -= amount;
+            Console.WriteLine("\nWithdrawal successful.\nNew balance: $" + balance);
+        } else if(amount > balance) {
+            Console.WriteLine("Insufficient funds.");
+        } else {
+            Console.WriteLine("Invalid withdrawal amount.")
+        }
+    }
+
+    public virtual checkBalance(string inputpassword)
+    {
+        if(!this.password.equals(inputpassword)) {
+            Console.WriteLine("Current balance: $" + balance);
+        } else {
+            Console.WriteLine("Incorrect password.");
+        }
+    }
+
+    public virtual displayAccounDetails()
+    {
+        DisplayPersonDetails();
+        Console.WriteLine("Account Number: " + accountNumber)
+    }
+
+}
+
+class practice
+{
+    static void main(Stringp[]args) 
+    {
+        Console.WriteLine("Enter Name: ");
+        String name = Console.ReadLine();
+
+        Console.WriteLine("Enter Age: ");
+        int age = Console.ReadLine();
+    
+
+        Console.WriteLine("Enter Account Number: ");
+        String accountNumber = scan.nextLine();
+
+        Console.WriteLine("Enter Balance: ");
+        double balance = Console.ReadLine();
+    
+
+        Console.WriteLine("Enter Password: ");
+        string password = Console.ReadLine();
+
+
+        BankAccount account = new BankAccount(accountNumber, name, age, balance, password);
+        Console.WriteLine("Account created");
+        account.displayAccounDetails();
+
+        int choice;
+
+        do
+        {
+            Console.WriteLine("\nBanking Menu:\n------------ -\nSelect[1] to Deposit:\nSelect[2] to Withdraw:\nSelect[3] to Check Balance:\nSelect[4] to Exit: ");
+            while(!int.TryParse(Console.ReadLine(), out number))
+            {
+                Console.WriteLine("Invalid input. Please enter valid input");
+            }
+
+            choice = Console.ReadLine();
+
+            switch(choice)
+            {
+                case 1:
+                    Console.WriteLine("\nEnter Deposit amount: ");
+                    double deposit = Console.ReadLine();     
+                    account.deposit(deposit);
+                    break;
+
+                case 2:
+                    Console.WriteLine("Enter Withdrawal amount: ");
+                    double withdraw = Console.ReadLine();
+                
+
+                    Console.WriteLine("Enter Password: ");
+                    String withdrawPassword = Console.ReadLine();
+                    account.withdraw(withdraw, withdrawPassword);
+                    break;
+
+                case 3:
+                    Console.WriteLine("Enter Password: ");
+                    String balancePassword = Console.ReadLine();
+                    account.checkBalance(balancePassword);
+                    break;
+
+                case 4:
+                    Console.WriteLine("Exiting...");
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid choice. Please select again.");
+            }
+        }
+    }
+}
+
