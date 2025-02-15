@@ -1,26 +1,27 @@
 public class MergeSort {
 
-    // Merge two subarrays of array[]
+    // Merge function to merge two halves
     static void merge(int[] array, int left, int mid, int right) {
-        // Sizes of the subarrays
+        // Calculate the sizes of two subarrays
         int n1 = mid - left + 1;
         int n2 = right - mid;
 
-        // Temporary arrays
+        // Create temporary arrays
         int[] leftArray = new int[n1];
         int[] rightArray = new int[n2];
 
         // Copy data to temp arrays
-        for (int i = 0; i < n1; i++)
+        for (int i = 0; i < n1; i++) {
             leftArray[i] = array[left + i];
-        for (int j = 0; j < n2; j++)
+        }
+        for (int j = 0; j < n2; j++) {
             rightArray[j] = array[mid + 1 + j];
+        }
 
-        // Merge the temp arrays back into array[left..right]
+        // Merge the temporary arrays back into the original array
         int lIndex = 0, rIndex = 0;
-        int jIndex = left; 
+        int jIndex = left;
 
-        // Compare and merge
         while (lIndex < n1 && rIndex < n2) {
             if (leftArray[lIndex] <= rightArray[rIndex]) {
                 array[jIndex] = leftArray[lIndex];
@@ -32,14 +33,14 @@ public class MergeSort {
             jIndex++;
         }
 
-        // Copy remaining elements of leftArray[], if any
+        // Copy remaining elements of leftArray, if any
         while (lIndex < n1) {
             array[jIndex] = leftArray[lIndex];
             lIndex++;
             jIndex++;
         }
 
-        // Copy remaining elements of rightArray[], if any
+        // Copy remaining elements of rightArray, if any
         while (rIndex < n2) {
             array[jIndex] = rightArray[rIndex];
             rIndex++;
@@ -47,13 +48,13 @@ public class MergeSort {
         }
     }
 
-    // Main function that sorts array[left..right] using merge()
+    // Recursive MergeSort function
     static void mergeSort(int[] array, int left, int right) {
         if (left < right) {
-            // Corrected midpoint calculation
+            // Find the midpoint
             int mid = left + (right - left) / 2;
 
-            // Divide the array into two halves
+            // Recursively sort the two halves
             mergeSort(array, left, mid);
             mergeSort(array, mid + 1, right);
 
@@ -62,22 +63,23 @@ public class MergeSort {
         }
     }
 
-    // Utility function to print the array
-    static void printArray(int[] array) {
-        for (int i = 0; i < array.length; i++)
-            System.out.print(array[i] + " ");
-        System.out.println();
-    }
-
-    // Main method to test the algorithm
+    // Main method to test the Merge Sort algorithm
     public static void main(String[] args) {
-        int[] array = { 7, 10, 8, 9, 11, 91 };
-        System.out.println("Original array:");
+        int[] array = { 7, 10, 89, 11, 91 };
+        System.out.println("Original Array:");
         printArray(array);
 
         mergeSort(array, 0, array.length - 1);
 
-        System.out.println("Sorted array:");
+        System.out.println("Sorted Array:");
         printArray(array);
+    }
+
+    // Helper method to print the array
+    static void printArray(int[] array) {
+        for (int value : array) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
     }
 }
